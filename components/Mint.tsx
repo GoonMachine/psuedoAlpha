@@ -13,13 +13,12 @@ const Mint = ({ version, reset }: { version: number, reset: () => void }) => {
           const signableTransaction = {
             kind: "moveCall" as const,
             data: {
-              packageObjectId: "0x0000000000000000000000000000000000000002",
-              module: "devnet_nft",
-              function: "mint",
+              packageObjectId: "0xde824d55ec7b4db5ac3278bdc9f9985d6c4e1719",
+              module: "onchain_identity",
+              function: "create_profile",
               typeArguments: [],
               arguments: [
-                "Ethos Example NFT",
-                "A sample NFT from Ethos Wallet.",
+                "testooor",
                 "https://ethoswallet.xyz/assets/images/ethos-email-logo.png",
               ],
               gasBudget: 1000,
@@ -27,14 +26,17 @@ const Mint = ({ version, reset }: { version: number, reset: () => void }) => {
           };
     
           const response = await wallet.signAndExecuteTransaction(signableTransaction);
+          console.log(response)
+
           if (response?.effects?.events) {
             const moveEventEvent = response.effects.events.find(
-              (e) => ('moveEvent' in e)
+              (e) => ('moveObject' in e)
             );
-            if (!moveEventEvent || !('moveEvent' in moveEventEvent)) return;
+            if (!moveEventEvent || !('moveObject' in moveEventEvent)) return;
 
-            const { moveEvent } = moveEventEvent;
-            setNftObjectId(moveEvent.fields?.object_id)
+            const { moveObject } = moveEventEvent;
+            setNftObjectId(moveObject)
+            console.log(setNftObjectId)
           }  
         } catch (error) {
           console.log(error);
@@ -60,10 +62,10 @@ const Mint = ({ version, reset }: { version: number, reset: () => void }) => {
                 </SuccessMessage>
             )}
             <button
-                className="mx-auto px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                className="mx-auto px-5 py-3 btn btn-active btn-accent w-full"
                 onClick={mint}
             >
-                Mint an NFT
+                Create a Profile!
             </button>
         </div>
     )

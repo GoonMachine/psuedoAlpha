@@ -28,3 +28,13 @@ a {
     background: black;
   }
 }
+.chat-image.avatar {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.placeholder-bg::placeholder {
+  background-color: black;
+}
+
